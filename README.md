@@ -1,3 +1,2 @@
 hi
 
-![diagram](diagram.svg)
