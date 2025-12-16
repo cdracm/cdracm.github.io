@@ -1,1 +1,3 @@
 hi
+
+[diagram](diagram.svg)
