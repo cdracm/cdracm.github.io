@@ -30,7 +30,7 @@ This is what we did to make the method `computeAllSubClassesOf("MySuperClassName
 2015 During sublasses search, all intermediate candidates were not held in memory all at once, it put memory under too much stress. Instead, just tokens (PsiAnchor) were stored and then PsiClass restored from them as necessary.
 2016 Queries for subclasses cached, to avoid expensive recalculation in each call
      Caches were fixed, made weak because of memory leaks
-     LocalSearchScope: separate processing
+     LocalSearchScope: separate processing, instead of iterating all classes and filtering out the scope.
 2016.04 New data structure was introduced: concurrent lazy collection. Separate threads might access this collection to return cached results immediately. 
      If the result was not calculated yet, the thread computed the result and cached it in this collection, so that all other threads would return this cached value immediately.
 2016.04. Deadlock fixed (due to inconcsitent lock order: readlock/psilock)
@@ -38,9 +38,13 @@ This is what we did to make the method `computeAllSubClassesOf("MySuperClassName
 2016.04 made collection store PsiAnchor isntead of PsiClasses
 2016.05 fixed bug when the exception inside computation didn't release the semaphore
 2016.05 fixed bug when PCE led to losing the current element being analyzed
+1. fixed bug when this method tried to cache all classes (java.lang.Object inheritors).
+   in this case the (parallel) method will try to distribute itself among FPJ threads and saturate all threads, which led to freeze.
 2016.06 fixed deadlock with inconsistent lock order
 2016.06 fixed Fork-join-pool starvation
 2016.06 fixed bug when PCE corrupted classBeingProcessed
+1. fixed bug when non-physical classes were cached and incorrectly returned afterwards. Do not cache these elements, recompute them instead.
+1. fixed performance issue when the subclasses were queried from EDT. This query led to the saturation of all threads which led to freezes. Instead, it was decided to not cache subclasses in this case at all.
 2018.02 fixed bug when waiting for all cooperationg threads to finish hanged
 
 Moral corner.
