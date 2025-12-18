@@ -36,40 +36,38 @@ This is what we did to make the method `computeAllSubClassesOf("MySuperClassName
    
    [anim](/assets/concCollectionAnim.html)
 
-<!-- Embeddable SVG frame animation (no JS, loop-correct). Paste into a GitHub Pages .md post. -->
+<!-- Embeddable SVG frame animation (CSS-only, loop-correct, order-stable) -->
 <div class="svg-anim-wrap">
 
-  <!-- Hidden preload to reduce flicker -->
+  <!-- Hidden preload -->
   <div class="svg-anim-preload" aria-hidden="true">
-    <img src="/assets/anim/concCollectionStep1.drawio.svg" alt="">
-    <img src="/assets/anim/concCollectionStep2.drawio.svg" alt="">
-    <img src="/assets/anim/concCollectionStep3.drawio.svg" alt="">
-    <img src="/assets/anim/concCollectionStep4.drawio.svg" alt="">
-    <img src="/assets/anim/concCollectionStep5.drawio.svg" alt="">
-    <img src="/assets/anim/concCollectionStep6.drawio.svg" alt="">
+    <img src="/assets/anim/concCollectionStep1.drawio.svg">
+    <img src="/assets/anim/concCollectionStep2.drawio.svg">
+    <img src="/assets/anim/concCollectionStep3.drawio.svg">
+    <img src="/assets/anim/concCollectionStep4.drawio.svg">
+    <img src="/assets/anim/concCollectionStep5.drawio.svg">
+    <img src="/assets/anim/concCollectionStep6.drawio.svg">
   </div>
 
   <div class="svg-anim" aria-label="Animated diagram">
-    <img class="frame" src="/assets/anim/concCollectionStep1.drawio.svg" alt="" loading="eager" decoding="async">
-    <img class="frame" src="/assets/anim/concCollectionStep2.drawio.svg" alt="" loading="eager" decoding="async">
-    <img class="frame" src="/assets/anim/concCollectionStep3.drawio.svg" alt="" loading="eager" decoding="async">
-    <img class="frame" src="/assets/anim/concCollectionStep4.drawio.svg" alt="" loading="eager" decoding="async">
-    <img class="frame" src="/assets/anim/concCollectionStep5.drawio.svg" alt="" loading="eager" decoding="async">
-    <img class="frame" src="/assets/anim/concCollectionStep6.drawio.svg" alt="" loading="eager" decoding="async">
+    <img class="frame f1" src="/assets/anim/concCollectionStep1.drawio.svg">
+    <img class="frame f2" src="/assets/anim/concCollectionStep2.drawio.svg">
+    <img class="frame f3" src="/assets/anim/concCollectionStep3.drawio.svg">
+    <img class="frame f4" src="/assets/anim/concCollectionStep4.drawio.svg">
+    <img class="frame f5" src="/assets/anim/concCollectionStep5.drawio.svg">
+    <img class="frame f6" src="/assets/anim/concCollectionStep6.drawio.svg">
   </div>
 </div>
 
 <style>
-  .svg-anim-wrap { margin: 1rem 0; position: relative; }
+  .svg-anim-wrap { margin: 1rem 0; }
 
   .svg-anim {
     position: relative;
     width: 100%;
-    max-width: 1200px; /* optional cap; remove if you want */
+    max-width: 1200px;
   }
 
-  /* Reserve space to avoid layout jump.
-     If not square, change this (e.g. 56.25% for 16:9, 75% for 4:3). */
   .svg-anim::before {
     content: "";
     display: block;
@@ -82,44 +80,45 @@ This is what we did to make the method `computeAllSubClassesOf("MySuperClassName
     width: 100%;
     height: 100%;
     opacity: 0;
-    will-change: opacity;
+    z-index: 0;
+    will-change: opacity, z-index;
     transform: translateZ(0);
-    backface-visibility: hidden;
   }
 
-  /* Hidden preload container (still fetched by the browser) */
+  /* Preload container */
   .svg-anim-preload {
     position: absolute;
     width: 0;
     height: 0;
     overflow: hidden;
     opacity: 0;
-    pointer-events: none;
   }
-  .svg-anim-preload img { width: 1px; height: 1px; }
 
-  /* 6 frames × 2s = 12s total; negative delays make looping seamless */
-  .svg-anim > img.frame { animation: frame 12s infinite linear; }
+  /* Animation: 6 frames × 2s = 12s */
+  .svg-anim > img.frame {
+    animation: frame 12s infinite linear;
+  }
 
-  .svg-anim > img.frame:nth-of-type(1) { animation-delay:  0s; }
-  .svg-anim > img.frame:nth-of-type(2) { animation-delay: -2s; }
-  .svg-anim > img.frame:nth-of-type(3) { animation-delay: -4s; }
-  .svg-anim > img.frame:nth-of-type(4) { animation-delay: -6s; }
-  .svg-anim > img.frame:nth-of-type(5) { animation-delay: -8s; }
-  .svg-anim > img.frame:nth-of-type(6) { animation-delay: -10s; }
+  /* NEGATIVE delays = seamless looping */
+  .f1 { animation-delay:  0s; }
+  .f2 { animation-delay: -2s; }
+  .f3 { animation-delay: -4s; }
+  .f4 { animation-delay: -6s; }
+  .f5 { animation-delay: -8s; }
+  .f6 { animation-delay: -10s; }
 
-  /* Loop-safe crossfade */
+  /* The key part: opacity + z-index together */
   @keyframes frame {
-    0%   { opacity: 0; }
-    5%   { opacity: 1; }
-    45%  { opacity: 1; }
-    50%  { opacity: 0; }
-    100% { opacity: 0; }
+    0%   { opacity: 0; z-index: 0; }
+    5%   { opacity: 1; z-index: 2; }
+    45%  { opacity: 1; z-index: 2; }
+    50%  { opacity: 0; z-index: 0; }
+    100% { opacity: 0; z-index: 0; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .svg-anim > img.frame { animation: none !important; }
-    .svg-anim > img.frame:first-of-type { opacity: 1; }
+    .svg-anim > img.frame:first-of-type { opacity: 1; z-index: 1; }
   }
 </style>
 
