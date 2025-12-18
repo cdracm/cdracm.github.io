@@ -36,91 +36,68 @@ This is what we did to make the method `computeAllSubClassesOf("MySuperClassName
    
    [anim](/assets/concCollectionAnim.html)
 
-<!-- Embeddable SVG frame animation (CSS-only, loop-correct, order-stable) -->
-<div class="svg-anim-wrap">
-
-  <!-- Hidden preload -->
-  <div class="svg-anim-preload" aria-hidden="true">
-    <img src="/assets/anim/concCollectionStep1.drawio.svg">
-    <img src="/assets/anim/concCollectionStep2.drawio.svg">
-    <img src="/assets/anim/concCollectionStep3.drawio.svg">
-    <img src="/assets/anim/concCollectionStep4.drawio.svg">
-    <img src="/assets/anim/concCollectionStep5.drawio.svg">
-    <img src="/assets/anim/concCollectionStep6.drawio.svg">
-  </div>
-
-  <div class="svg-anim" aria-label="Animated diagram">
-    <img class="frame f1" src="/assets/anim/concCollectionStep1.drawio.svg">
-    <img class="frame f2" src="/assets/anim/concCollectionStep2.drawio.svg">
-    <img class="frame f3" src="/assets/anim/concCollectionStep3.drawio.svg">
-    <img class="frame f4" src="/assets/anim/concCollectionStep4.drawio.svg">
-    <img class="frame f5" src="/assets/anim/concCollectionStep5.drawio.svg">
-    <img class="frame f6" src="/assets/anim/concCollectionStep6.drawio.svg">
-  </div>
+<div class="svg-anim-js" data-delay-ms="2000" aria-label="Animated diagram">
+  <img class="svg-anim-js__img"
+       src="/assets/anim/concCollectionStep1.drawio.svg"
+       alt="Animation frame"
+       decoding="async">
 </div>
 
 <style>
-  .svg-anim-wrap { margin: 1rem 0; }
-
-  .svg-anim {
-    position: relative;
-    width: 100%;
-    max-width: 1200px;
-  }
-
-  .svg-anim::before {
-    content: "";
-    display: block;
-    padding-top: 100%;
-  }
-
-  .svg-anim > img.frame {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    z-index: 0;
-    will-change: opacity, z-index;
-    transform: translateZ(0);
-  }
-
-  /* Preload container */
-  .svg-anim-preload {
-    position: absolute;
-    width: 0;
-    height: 0;
-    overflow: hidden;
-    opacity: 0;
-  }
-
-  /* Animation: 6 frames × 2s = 12s */
-  .svg-anim > img.frame {
-    animation: frame 12s infinite linear;
-  }
-
-  /* NEGATIVE delays = seamless looping */
-  .f1 { animation-delay:  0s; }
-  .f2 { animation-delay: -2s; }
-  .f3 { animation-delay: -4s; }
-  .f4 { animation-delay: -6s; }
-  .f5 { animation-delay: -8s; }
-  .f6 { animation-delay: -10s; }
-
-  /* The key part: opacity + z-index together */
-  @keyframes frame {
-    0%   { opacity: 0; z-index: 0; }
-    5%   { opacity: 1; z-index: 2; }
-    45%  { opacity: 1; z-index: 2; }
-    50%  { opacity: 0; z-index: 0; }
-    100% { opacity: 0; z-index: 0; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .svg-anim > img.frame { animation: none !important; }
-    .svg-anim > img.frame:first-of-type { opacity: 1; z-index: 1; }
-  }
+  /* Optional sizing — tweak as you like */
+  .svg-anim-js { width: 100%; max-width: 1200px; }
+  .svg-anim-js__img { width: 100%; height: auto; display: block; }
 </style>
+
+<script>
+(() => {
+  // Frames (absolute paths)
+  const frames = [
+    "/assets/anim/concCollectionStep1.drawio.svg",
+    "/assets/anim/concCollectionStep2.drawio.svg",
+    "/assets/anim/concCollectionStep3.drawio.svg",
+    "/assets/anim/concCollectionStep4.drawio.svg",
+    "/assets/anim/concCollectionStep5.drawio.svg",
+    "/assets/anim/concCollectionStep6.drawio.svg",
+  ];
+
+  // Support multiple animations on one page
+  document.querySelectorAll(".svg-anim-js").forEach((root) => {
+    const imgEl = root.querySelector(".svg-anim-js__img");
+    const delayMs = Number(root.dataset.delayMs || 2000);
+
+    // Preload all frames first to avoid white flashes
+    const loaded = new Array(frames.length).fill(false);
+
+    function preloadOne(i) {
+      return new Promise((resolve) => {
+        const im = new Image();
+        im.decoding = "async";
+        im.onload = () => { loaded[i] = true; resolve(true); };
+        im.onerror = () => { loaded[i] = false; resolve(false); };
+        im.src = frames[i];
+      });
+    }
+
+    Promise.all(frames.map((_, i) => preloadOne(i))).then(() => {
+      // Start animation only after preload attempt
+      let idx = 0;
+      imgEl.src = frames[idx];
+
+      setInterval(() => {
+        const next = (idx + 1) % frames.length;
+
+        // Switch only if next frame is loaded; otherwise keep current
+        if (loaded[next]) {
+          idx = next;
+          imgEl.src = frames[idx];
+        }
+      }, delayMs);
+    });
+  });
+})();
+</script>
+
 
 
 1. Deadlock fixed (due to inconcsitent lock order: `readLock`/`PsiLock`)
