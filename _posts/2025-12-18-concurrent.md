@@ -36,7 +36,7 @@ This is what we did to make the method `computeAllSubClassesOf("MySuperClassName
    
    [anim](/assets/concCollectionAnim.html)
 
-<!-- Embeddable SVG frame animation (no JS, loopable). Paste into a GitHub Pages .md post. -->
+<!-- Embeddable SVG frame animation (no JS, loop-correct). Paste into a GitHub Pages .md post. -->
 <div class="svg-anim-wrap">
 
   <!-- Hidden preload to reduce flicker -->
@@ -62,11 +62,10 @@ This is what we did to make the method `computeAllSubClassesOf("MySuperClassName
 <style>
   .svg-anim-wrap { margin: 1rem 0; position: relative; }
 
-  /* Animation box */
   .svg-anim {
     position: relative;
-    width: 100%;          /* full post width */
-    max-width: 1200px;    /* optional cap; remove if you want */
+    width: 100%;
+    max-width: 1200px; /* optional cap; remove if you want */
   }
 
   /* Reserve space to avoid layout jump.
@@ -77,7 +76,6 @@ This is what we did to make the method `computeAllSubClassesOf("MySuperClassName
     padding-top: 100%;
   }
 
-  /* Frames */
   .svg-anim > img.frame {
     position: absolute;
     inset: 0;
@@ -100,16 +98,17 @@ This is what we did to make the method `computeAllSubClassesOf("MySuperClassName
   }
   .svg-anim-preload img { width: 1px; height: 1px; }
 
-  /* 6 frames × 2s = 12s total */
-  .svg-anim > img.frame { animation: frame 12s infinite; }
-  .svg-anim > img.frame:nth-of-type(1) { animation-delay: 0s; }
-  .svg-anim > img.frame:nth-of-type(2) { animation-delay: 2s; }
-  .svg-anim > img.frame:nth-of-type(3) { animation-delay: 4s; }
-  .svg-anim > img.frame:nth-of-type(4) { animation-delay: 6s; }
-  .svg-anim > img.frame:nth-of-type(5) { animation-delay: 8s; }
-  .svg-anim > img.frame:nth-of-type(6) { animation-delay: 10s; }
+  /* 6 frames × 2s = 12s total; negative delays make looping seamless */
+  .svg-anim > img.frame { animation: frame 12s infinite linear; }
 
-  /* Loop-safe crossfade: never a fully blank moment at the wraparound */
+  .svg-anim > img.frame:nth-of-type(1) { animation-delay:  0s; }
+  .svg-anim > img.frame:nth-of-type(2) { animation-delay: -2s; }
+  .svg-anim > img.frame:nth-of-type(3) { animation-delay: -4s; }
+  .svg-anim > img.frame:nth-of-type(4) { animation-delay: -6s; }
+  .svg-anim > img.frame:nth-of-type(5) { animation-delay: -8s; }
+  .svg-anim > img.frame:nth-of-type(6) { animation-delay: -10s; }
+
+  /* Loop-safe crossfade */
   @keyframes frame {
     0%   { opacity: 0; }
     5%   { opacity: 1; }
