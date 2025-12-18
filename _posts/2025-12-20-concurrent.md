@@ -33,6 +33,7 @@ This is what we did to make the method `computeAllSubClassesOf("MySuperClassName
      `LocalSearchScope`: separate processing, instead of iterating all classes and filtering out the scope.
 1. New data structure was introduced: concurrent lazy collection. Separate threads might access this collection to return cached results immediately. 
      If the result was not calculated yet, the thread computed the result and cached it in this collection, so that all other threads would return this cached value immediately.
+   ![gif](/assets/concCollection.gif)
 1. Deadlock fixed (due to inconcsitent lock order: `readLock`/`PsiLock`)
 1. made this concurrent lazy collection was made cooperative. All these threads participated in discovering more subclasses, added them into this collection, cooperatively helping each other to speedup the process.
 1. made collection store `PsiAnchor` isntead of `PsiClass`es
