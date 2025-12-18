@@ -32,42 +32,39 @@ This is what we did to make the method `computeAllSubClassesOf("MySuperClassName
      Caches were fixed, made weak because of memory leaks
      `LocalSearchScope`: separate processing, instead of iterating all classes and filtering out the scope.
 1. New data structure was introduced: concurrent lazy collection. Separate threads might access this collection to return cached results immediately. 
-     If the result was not calculated yet, the thread computed the result and cached it in this collection, so that all other threads would return this cached value immediately.
-   
-   [anim](/assets/concCollectionAnim.html)
-
-<div class="svg-anim-js" data-delay-ms="2000" aria-label="Animated diagram">
-  <img class="svg-anim-js__img"
+     If the result was not calculated yet, the thread computed the result and cached it in this collection, so that all other threads would return this cached value immediately.   
+   <div class="svg-anim-js" data-delay-ms="2000" aria-label="Animated diagram">
+    <img class="svg-anim-js__img"
        src="/assets/anim/concCollectionStep1.drawio.svg"
        alt="Animation frame"
        decoding="async">
-</div>
+   </div>
 
-<style>
-  /* Optional sizing — tweak as you like */
-  .svg-anim-js { width: 100%; max-width: 1200px; }
-  .svg-anim-js__img { width: 100%; height: auto; display: block; }
-</style>
+   <style>
+     /* Optional sizing — tweak as you like */
+     .svg-anim-js { width: 100%; max-width: 1200px; }
+     .svg-anim-js__img { width: 100%; height: auto; display: block; }
+   </style>
 
-<script>
-(() => {
-  // Frames (absolute paths)
-  const frames = [
+   <script>
+   (() => {
+     // Frames (absolute paths)
+     const frames = [
     "/assets/anim/concCollectionStep1.drawio.svg",
     "/assets/anim/concCollectionStep2.drawio.svg",
     "/assets/anim/concCollectionStep3.drawio.svg",
     "/assets/anim/concCollectionStep4.drawio.svg",
     "/assets/anim/concCollectionStep5.drawio.svg",
     "/assets/anim/concCollectionStep6.drawio.svg",
-  ];
+   ];
 
-  // Support multiple animations on one page
-  document.querySelectorAll(".svg-anim-js").forEach((root) => {
-    const imgEl = root.querySelector(".svg-anim-js__img");
-    const delayMs = Number(root.dataset.delayMs || 2000);
+     // Support multiple animations on one page
+     document.querySelectorAll(".svg-anim-js").forEach((root) => {
+       const imgEl = root.querySelector(".svg-anim-js__img");
+       const delayMs = Number(root.dataset.delayMs || 2000);
 
-    // Preload all frames first to avoid white flashes
-    const loaded = new Array(frames.length).fill(false);
+     // Preload all frames first to avoid white flashes
+     const loaded = new Array(frames.length).fill(false);
 
     function preloadOne(i) {
       return new Promise((resolve) => {
@@ -91,16 +88,14 @@ This is what we did to make the method `computeAllSubClassesOf("MySuperClassName
         if (loaded[next]) {
           idx = next;
           imgEl.src = frames[idx];
-        }
-      }, delayMs);
+          }
+        }, delayMs);
+      });
     });
-  });
-})();
-</script>
-
-
-
-1. Deadlock fixed (due to inconcsitent lock order: `readLock`/`PsiLock`)
+  })();
+  </script>
+  
+6. Deadlock fixed (due to inconcsitent lock order: `readLock`/`PsiLock`)
 1. made this concurrent lazy collection was made cooperative. All these threads participated in discovering more subclasses, added them into this collection, cooperatively helping each other to speedup the process.
 1. made collection store `PsiAnchor` isntead of `PsiClass`es
 1. fixed bug when the exception inside computation didn't release the semaphore
