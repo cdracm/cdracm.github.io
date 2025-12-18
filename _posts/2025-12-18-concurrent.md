@@ -49,14 +49,14 @@ This is what we did to make the method `computeAllSubClassesOf("MySuperClassName
     <img src="/assets/anim/concCollectionStep6.drawio.svg" alt="">
   </div>
 
-  <div class="svg-anim" aria-label="Animated diagram">
-    <img src="/assets/anim/concCollectionStep1.drawio.svg" alt="" loading="eager" decoding="async">
-    <img src="/assets/anim/concCollectionStep2.drawio.svg" alt="" loading="eager" decoding="async">
-    <img src="/assets/anim/concCollectionStep3.drawio.svg" alt="" loading="eager" decoding="async">
-    <img src="/assets/anim/concCollectionStep4.drawio.svg" alt="" loading="eager" decoding="async">
-    <img src="/assets/anim/concCollectionStep5.drawio.svg" alt="" loading="eager" decoding="async">
-    <img src="/assets/anim/concCollectionStep6.drawio.svg" alt="" loading="eager" decoding="async">
-  </div>
+ <div class="svg-anim">
+  <img class="frame" src="/assets/anim/concCollectionStep1.drawio.svg" alt="">
+  <img class="frame" src="/assets/anim/concCollectionStep2.drawio.svg" alt="">
+  <img class="frame" src="/assets/anim/concCollectionStep3.drawio.svg" alt="">
+  <img class="frame" src="/assets/anim/concCollectionStep4.drawio.svg" alt="">
+  <img class="frame" src="/assets/anim/concCollectionStep5.drawio.svg" alt="">
+  <img class="frame" src="/assets/anim/concCollectionStep6.drawio.svg" alt="">
+</div>
 </div>
 
 <style>
@@ -95,13 +95,15 @@ This is what we did to make the method `computeAllSubClassesOf("MySuperClassName
   }
   .svg-anim-preload img { width: 1px; height: 1px; }
 
-  /* 6 frames × 2s = 12s total */
-  .svg-anim img:nth-child(1) { animation: frame 12s infinite; animation-delay: 0s; }
-  .svg-anim img:nth-child(2) { animation: frame 12s infinite; animation-delay: 2s; }
-  .svg-anim img:nth-child(3) { animation: frame 12s infinite; animation-delay: 4s; }
-  .svg-anim img:nth-child(4) { animation: frame 12s infinite; animation-delay: 6s; }
-  .svg-anim img:nth-child(5) { animation: frame 12s infinite; animation-delay: 8s; }
-  .svg-anim img:nth-child(6) { animation: frame 12s infinite; animation-delay: 10s; }
+.svg-anim .frame { /* positioning + opacity etc */ }
+
+/* IMPORTANT: nth-of-type counts only <img> of that type */
+.svg-anim > img.frame:nth-of-type(1) { animation-delay: 0s; }
+.svg-anim > img.frame:nth-of-type(2) { animation-delay: 2s; }
+.svg-anim > img.frame:nth-of-type(3) { animation-delay: 4s; }
+.svg-anim > img.frame:nth-of-type(4) { animation-delay: 6s; }
+.svg-anim > img.frame:nth-of-type(5) { animation-delay: 8s; }
+.svg-anim > img.frame:nth-of-type(6) { animation-delay: 10s; }
 
   /* Small crossfade to avoid hard blink */
   @keyframes frame {
