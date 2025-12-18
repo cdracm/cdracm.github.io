@@ -37,12 +37,12 @@ This is what we did to make the method `computeAllSubClassesOf("MySuperClassName
    [anim](/assets/concCollectionAnim.html)
 
 <div class="svg-anim">
-  <img src="assets/anim/concCollectionStep1.drawio.svg" alt="">
-  <img src="assets/anim/concCollectionStep2.drawio.svg" alt="">
-  <img src="assets/anim/concCollectionStep3.drawio.svg" alt="">
-  <img src="assets/anim/concCollectionStep4.drawio.svg" alt="">
-  <img src="assets/anim/concCollectionStep5.drawio.svg" alt="">
-  <img src="assets/anim/concCollectionStep6.drawio.svg" alt="">
+  <img src="/assets/anim/concCollectionStep1.drawio.svg" alt="">
+  <img src="/assets/anim/concCollectionStep2.drawio.svg" alt="">
+  <img src="/assets/anim/concCollectionStep3.drawio.svg" alt="">
+  <img src="/assets/anim/concCollectionStep4.drawio.svg" alt="">
+  <img src="/assets/anim/concCollectionStep5.drawio.svg" alt="">
+  <img src="/assets/anim/concCollectionStep6.drawio.svg" alt="">
 </div>
 
 <style>
