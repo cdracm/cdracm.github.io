@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Conc"
+hidden: true
 ---
 
 Before I forgot I want to tell the story of one particularly complex piece of concurrent code.
