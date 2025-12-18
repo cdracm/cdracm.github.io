@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SVG Frame Animation</title>
+
+<style>
+.svg-anim {
+  position: relative;
+  width: 480px;           /* control displayed size */
+  max-width: 100%;
+}
+
+/* Reserve space to prevent layout jump (adjust ratio if needed) */
+.svg-anim::before {
+  content: "";
+  display: block;
+  padding-top: 100%;      /* 1:1 aspect ratio */
+}
+
+.svg-anim img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+}
+
+/* 6 frames × 2s = 12s total */
+.svg-anim img:nth-child(1) { animation: show 12s infinite; animation-delay: 0s; }
+.svg-anim img:nth-child(2) { animation: show 12s infinite; animation-delay: 2s; }
+.svg-anim img:nth-child(3) { animation: show 12s infinite; animation-delay: 4s; }
+.svg-anim img:nth-child(4) { animation: show 12s infinite; animation-delay: 6s; }
+.svg-anim img:nth-child(5) { animation: show 12s infinite; animation-delay: 8s; }
+.svg-anim img:nth-child(6) { animation: show 12s infinite; animation-delay: 10s; }
+
+@keyframes show {
+  0%   { opacity: 1; }
+  16%  { opacity: 1; }   /* ~2s of 12s */
+  17%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<h2>Concurrent Collection Animation</h2>
+
+<div class="svg-anim">
+  <img src="assets/anim/concCollectionStep1.drawio.svg" alt="">
+  <img src="assets/anim/concCollectionStep2.drawio.svg" alt="">
+  <img src="assets/anim/concCollectionStep3.drawio.svg" alt="">
+  <img src="assets/anim/concCollectionStep4.drawio.svg" alt="">
+  <img src="assets/anim/concCollectionStep5.drawio.svg" alt="">
+  <img src="assets/anim/concCollectionStep6.drawio.svg" alt="">
+</div>
+
+</body>
+</html>
