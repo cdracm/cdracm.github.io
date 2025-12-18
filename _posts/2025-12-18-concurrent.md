@@ -36,52 +36,87 @@ This is what we did to make the method `computeAllSubClassesOf("MySuperClassName
    
    [anim](/assets/concCollectionAnim.html)
 
-<div class="svg-anim">
-  <img src="/assets/anim/concCollectionStep1.drawio.svg" style="width:100vw;" alt="">
-  <img src="/assets/anim/concCollectionStep2.drawio.svg" style="width:100vw;" alt="">
-  <img src="/assets/anim/concCollectionStep3.drawio.svg" style="width:100vw;" alt="">
-  <img src="/assets/anim/concCollectionStep4.drawio.svg" style="width:100vw;" alt="">
-  <img src="/assets/anim/concCollectionStep5.drawio.svg" style="width:100vw;" alt="">
-  <img src="/assets/anim/concCollectionStep6.drawio.svg" style="width:100vw;" alt="">
+<!-- SVG frame animation (no JS) -->
+<div class="svg-anim-wrap">
+
+  <!-- Preload (hidden) to reduce blinking -->
+  <div class="svg-anim-preload" aria-hidden="true">
+    <img src="/assets/anim/concCollectionStep1.drawio.svg" alt="">
+    <img src="/assets/anim/concCollectionStep2.drawio.svg" alt="">
+    <img src="/assets/anim/concCollectionStep3.drawio.svg" alt="">
+    <img src="/assets/anim/concCollectionStep4.drawio.svg" alt="">
+    <img src="/assets/anim/concCollectionStep5.drawio.svg" alt="">
+    <img src="/assets/anim/concCollectionStep6.drawio.svg" alt="">
+  </div>
+
+  <div class="svg-anim" aria-label="Animated diagram">
+    <img src="/assets/anim/concCollectionStep1.drawio.svg" alt="" loading="eager" decoding="async">
+    <img src="/assets/anim/concCollectionStep2.drawio.svg" alt="" loading="eager" decoding="async">
+    <img src="/assets/anim/concCollectionStep3.drawio.svg" alt="" loading="eager" decoding="async">
+    <img src="/assets/anim/concCollectionStep4.drawio.svg" alt="" loading="eager" decoding="async">
+    <img src="/assets/anim/concCollectionStep5.drawio.svg" alt="" loading="eager" decoding="async">
+    <img src="/assets/anim/concCollectionStep6.drawio.svg" alt="" loading="eager" decoding="async">
+  </div>
 </div>
 
 <style>
-.svg-anim {
-  position: relative;
-  width: 480px;           /* control displayed size */
-  max-width: 100%;
-}
+  .svg-anim-wrap { margin: 1rem 0; }
 
-/* Reserve space to prevent layout jump (adjust ratio if needed) */
-.svg-anim::before {
-  content: "";
-  display: block;
-  padding-top: 100%;      /* 1:1 aspect ratio */
-}
+  .svg-anim {
+    position: relative;
+    width: 100%;          /* use the full post width */
+    max-width: 1200px;    /* optional cap; remove if you want truly unlimited */
+  }
 
-.svg-anim img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: auto;
-  opacity: 0;
-}
+  /* Reserve space to prevent layout jump (adjust ratio if needed) */
+  .svg-anim::before {
+    content: "";
+    display: block;
+    padding-top: 100%;    /* 1:1 aspect ratio */
+  }
 
-/* 6 frames × 2s = 12s total */
-.svg-anim img:nth-child(1) { animation: show 12s infinite; animation-delay: 0s; }
-.svg-anim img:nth-child(2) { animation: show 12s infinite; animation-delay: 2s; }
-.svg-anim img:nth-child(3) { animation: show 12s infinite; animation-delay: 4s; }
-.svg-anim img:nth-child(4) { animation: show 12s infinite; animation-delay: 6s; }
-.svg-anim img:nth-child(5) { animation: show 12s infinite; animation-delay: 8s; }
-.svg-anim img:nth-child(6) { animation: show 12s infinite; animation-delay: 10s; }
+  .svg-anim img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    will-change: opacity;
+  }
 
-@keyframes show {
-  0%   { opacity: 1; }
-  16%  { opacity: 1; }   /* ~2s of 12s */
-  17%  { opacity: 0; }
-  100% { opacity: 0; }
-}
+  /* Hide preload images but still fetch them */
+  .svg-anim-preload {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .svg-anim-preload img { width: 1px; height: 1px; }
+
+  /* 6 frames × 2s = 12s total */
+  .svg-anim img:nth-child(1) { animation: frame 12s infinite; animation-delay: 0s; }
+  .svg-anim img:nth-child(2) { animation: frame 12s infinite; animation-delay: 2s; }
+  .svg-anim img:nth-child(3) { animation: frame 12s infinite; animation-delay: 4s; }
+  .svg-anim img:nth-child(4) { animation: frame 12s infinite; animation-delay: 6s; }
+  .svg-anim img:nth-child(5) { animation: frame 12s infinite; animation-delay: 8s; }
+  .svg-anim img:nth-child(6) { animation: frame 12s infinite; animation-delay: 10s; }
+
+  /* Small crossfade to avoid hard blink */
+  @keyframes frame {
+    0%   { opacity: 0; }
+    8%   { opacity: 1; }
+    92%  { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .svg-anim img { animation: none !important; }
+    .svg-anim img:first-child { opacity: 1; }
+  }
 </style>
+
 
 1. Deadlock fixed (due to inconcsitent lock order: `readLock`/`PsiLock`)
 1. made this concurrent lazy collection was made cooperative. All these threads participated in discovering more subclasses, added them into this collection, cooperatively helping each other to speedup the process.
