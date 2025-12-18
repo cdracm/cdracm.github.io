@@ -37,12 +37,12 @@ This is what we did to make the method `computeAllSubClassesOf("MySuperClassName
    [anim](/assets/concCollectionAnim.html)
 
 <div class="svg-anim">
-  <img src="/assets/anim/concCollectionStep1.drawio.svg" width="300%" alt="">
-  <img src="/assets/anim/concCollectionStep2.drawio.svg" width="200%" alt="">
-  <img src="/assets/anim/concCollectionStep3.drawio.svg" width="150%" alt="">
-  <img src="/assets/anim/concCollectionStep4.drawio.svg" width="120%" alt="">
-  <img src="/assets/anim/concCollectionStep5.drawio.svg" width="400%" alt="">
-  <img src="/assets/anim/concCollectionStep6.drawio.svg" width="500%" alt="">
+  <img src="/assets/anim/concCollectionStep1.drawio.svg" style="width:100vw;" alt="">
+  <img src="/assets/anim/concCollectionStep2.drawio.svg" style="width:100vw;" alt="">
+  <img src="/assets/anim/concCollectionStep3.drawio.svg" style="width:100vw;" alt="">
+  <img src="/assets/anim/concCollectionStep4.drawio.svg" style="width:100vw;" alt="">
+  <img src="/assets/anim/concCollectionStep5.drawio.svg" style="width:100vw;" alt="">
+  <img src="/assets/anim/concCollectionStep6.drawio.svg" style="width:100vw;" alt="">
 </div>
 
 <style>
