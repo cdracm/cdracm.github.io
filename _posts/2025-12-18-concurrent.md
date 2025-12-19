@@ -116,7 +116,7 @@ This is a rough `git` history of what was done to make this method work faster:
    It was decided not to cache subclasses in this case at all.
 1. Fixed a bug where waiting for all cooperating threads hung indefinitely.
 
-Moral corner.
+Mandatory moral corner.
 
 1. Never again the concurrent cooperating threads.
    It's too crazy complex to answer these questions in Java:
