@@ -129,3 +129,19 @@ Mandatory moral corner.
    - After we distributed work to all available CPU cores, and every thread does meaningful work, how to make sure that everything else, especially more important stuff, is not slowed down?
    - After we saturated all CPU resources, how to make it all safely interruptible?
    - What about the remaining 90%?
+     
+  <script src="https://giscus.app/client.js"
+        data-repo="cdracm/cdracm.github.io"
+        data-repo-id="R_kgDOQpsinA"
+        data-category="Blog comments"
+        data-category-id="DIC_kwDOQpsinM4C0BnF"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
