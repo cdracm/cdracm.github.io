@@ -109,6 +109,7 @@ This is a rough `git` history of what was done to make this method work faster:
    In addition to insane memory usage, we tried to distribute the search among all `ForkJoinPool` threads and saturate them all, causing freezes.
    We disabled caching and parallelization in this case, having decided that everyone who tried to query all `java.lang.Object` inheritors deserved to be punished.
 1. Fixed a deadlock with inconsistent lock order (`readLock`/internal lock).
+1. **Aaaaaah!**
 1. Fixed `ForkJoinPool` starvation. We needed to spawn new FJP threads when the clients blocked.
 1. Fixed a bug where `ProcessCanceledException` corrupted the `classBeingProcessed` collection.
 1. Fixed a bug where non-physical classes were cached and incorrectly returned afterwards. These are special light elements that can't be cached and must be recomputed each time.
