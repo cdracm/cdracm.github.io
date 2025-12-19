@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Conc"
+title: "Two Concurrent Life Sentences for Parallel Code"
 hidden: true
 ---
 
