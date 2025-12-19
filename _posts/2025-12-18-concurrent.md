@@ -2,6 +2,7 @@
 layout: post
 title: "Two Concurrent Life Sentences for Parallel Code"
 hidden: true
+comments: true
 ---
 
 I need to tell a story about one particularly complex piece of concurrent code.
