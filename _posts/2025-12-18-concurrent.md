@@ -118,7 +118,8 @@ This is a rough `git` history of what was done to make this method work faster:
 
 Moral corner.
 
-1. Never again the concurrent cooperating threads. It's too crazy complex to do right in Java.
+1. Never again the concurrent cooperating threads.
+   It's too crazy complex to answer these questions in Java:
    - How would several threads help each other?
    - How to distribute work between them safely and non-blockingly?
    - How to ensure the work is distributed to as many CPU cores as possible?
