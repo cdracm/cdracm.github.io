@@ -1,6 +1,21 @@
-@media (max-width: 600px) {
+/* ===== GISCUS MOBILE FONT FIX (STRONG) ===== */
+
+/* Ensure iframe uses normal text scaling */
+.giscus-frame {
+  width: 100% !important;
+}
+
+/* Force readable font size on mobile */
+@media (max-width: 768px) {
   .giscus,
-  .giscus-frame {
+  .giscus-frame,
+  .giscus-frame body {
     font-size: 16px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Force iframe content scaling */
+  .giscus-frame {
+    zoom: 1.15;
   }
 }
