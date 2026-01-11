@@ -44,3 +44,5 @@ And thus, never-ending battle for performance of all these inspections has begun
 1. Remove obsolete highlighters faster
 1. API for discovering PSI elements only once for all inspections/annotators
 1. Lazy quickfixes
+1. Immediate highlighter creation
+1. smart parallelization 
