@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How Many Optimizations"
+title: "Efficiency by Thousand Cuts"
 hidden: true
 comments: true
 ---
@@ -56,6 +56,9 @@ And thus, never-ending battle for performance of all these inspections has begun
    So however many whitespaces or curly braces you feed this inspection, you'll get nothing in return.
    Until you pass PsiIdentifier - then it has a chance to return a warning "This identifier is too negative, come to your senses".
    What if we keep track of these elements - I call them "fertile PSI elements" - and feed them first, to reduce the latency?
+   Of course, it only works when PSI elements stay more or less stable on typing.
+   Otherwise, when almost all PSI gets rebuilt on every key press, all accumulated knowledge on PSI element fertility is lost.
+   This is precisely what happens in not-so-well written languages, where incremental reparse and other optimizations are not yet implemented.
     
 1. Change scope locality detectors
    This optimization tries to compute the smallest set of PSI elements to restart the highlighting for.
@@ -63,7 +66,29 @@ And thus, never-ending battle for performance of all these inspections has begun
    For example, in Java when something change inside one method code block it should not affect the other method code block.
    So we can avoid (expensive) re-highlighting that other method altogether.
    
-1. Remove obsolete highlighters faster
+1. Remove obsolete highlighters faster.
+   This was a big optimization which required rewriting the whole highlighting engine.
+   Before this optimization, the following algortighm was used:
+   - run all inspections, see what highlighters they generated
+   - compare all generated highlighters with all highlighters already exising in the file
+   - remove the obsolete highlighters (i.e., the ones that are no longer generated)
+   Please note that the interval between running the inspection and removing the obsolete highlighter it no longer generated is huge.
+   It's essentially the total time of all inspections being ran for this file.
+   This is a very long time.
+   Can we do better?
+   The algorithm above doesn't know that inspections generate highlighters when being fed with some PSI element.
+   If we remember which PSI element caused generation of which highlighters, we'll be able to remove the obsolete highlighter
+   as soon as the inspection doesn't generate it when processed this particular PSI element the second time.
+   Again, this optimization is heavily dependent on PSI reparse preserving identity of unrelated PSI elements.
+
+   What went wrong with this optimization? A couple things:
+   - Turned out that PSI reparse is not that stable, even in mature languages supported since Old Ages.
+   - People really are eager to write stupid things.
+     I found several inspections went bonkers when called with the same PSI elements.
+     Some returned a highlighter when was called with PsiIdentifier. The second time it returned this highlighter when was called with PsiClass.
+     And so on, it alternated PSI elements as if unsure which one to pick.
+     What's wrong with you people?
+
 1. API for discovering PSI elements only once for all inspections/annotators
 1. Lazy quickfixes
 1. Immediate highlighter creation
