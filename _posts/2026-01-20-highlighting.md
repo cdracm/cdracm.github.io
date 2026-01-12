@@ -89,7 +89,14 @@ And thus, never-ending battle for performance of all these inspections has begun
      And so on, it alternated PSI elements as if unsure which one to pick.
      What's wrong with you people?
 
-1. API for discovering PSI elements only once for all inspections/annotators
 1. Lazy quickfixes
+   Some inspections have to do heavy work to compute and present fixes/improvements to the code.
+   For example, "unresolved symbol" inspection highlights incorrect symbols in the text and suggests to fix them, either by adding imports, qualifiers or renaming them.
+   This can be very expensive because for example finding the correct "assert" methods among dozens is hard. 
+   This optimization tries to defer computing these expensive quick fixes when they are not needed.
+   What went wrong:
+   - Spawning and canceling all these additional background calculations proved to be complicated
+   
+1. API for discovering PSI elements only once for all inspections/annotators
 1. Immediate highlighter creation
 1. smart parallelization 
