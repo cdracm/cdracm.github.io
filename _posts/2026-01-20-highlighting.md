@@ -97,6 +97,22 @@ And thus, never-ending battle for performance of all these inspections has begun
    What went wrong:
    - Spawning and canceling all these additional background calculations proved to be complicated
    
-1. API for discovering PSI elements only once for all inspections/annotators
 1. Immediate highlighter creation
+   Inspections gererate warning/error diagnostics, that are converted to highlighters, that are shown onscreen.
+   Pretty simple workflow which begs for simple algorithm: `showOnScreen(convertToHighlighters(generateWarnings()))`.
+   But this algorithm means the slow inspection would hold back showing results for the fast inspection.
+   So the algorihm needs to be more complex
+   generateWarnings(callback: generatedWarning ->
+       highlighter = convertToHighlighter(generatedWarning)
+       addHighlighterIncrementally(highlighter)
+   )
+   This way the faster the inspection, the faster its results appear onscreen, while the slower inspections continue in background.
+   What went wrong?
+   People. Turned out they managed to screw their inspections far more deeply than I thought would be possible.
+   A few inspections assumed they could orchestrate a little happy group where some small inspection completed faster and other inspections from the group would use its results for their execution later.
+   Or some inspection thought it could warm up caches before other inspections start executing.
+   Or some other inspection hoped nobody would notice its querying the network in synchronous manner because it was spawned later.
+   All these assumptions were broken of course.
+   
 1. smart parallelization 
+1. API for discovering PSI elements only once for all inspections/annotators
