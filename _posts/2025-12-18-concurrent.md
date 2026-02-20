@@ -5,7 +5,7 @@ hidden: true
 comments: true
 ---
 
-I need to tell a story about one particularly complex piece of concurrent code.
+I need to tell a story about one particularly complex piece of concurrent code, before its complexity overflow my mind.
 I'm working on an IDE, and the code I'm writing analyzes the text in the editor and tries to highlight some problems. 
 For example, inconsistent Java code constructs.
 To do that, we need to make a model of the Java code the user is trying to write in our editor.
@@ -15,8 +15,8 @@ final class X {}
 class Y extends X {}
 ```
 and the IDE responds with `I'm afraid you can't do that Fred, you must not extend the final class`.
-To understand this, we should build a hierarchy of all classes the user managed to write: `X <- Y`.
-To compute this hierarchy, we need to find all classes that extend this class, fast.
+To understand this, we should build a hierarchy of all classes the user has in the project so far: `X <- Y`.
+So we need to find all classes that extend this particular class, fast.
 
 This is a rough `git` history of what was done to make this method work faster:
 
