@@ -116,3 +116,6 @@ And thus, never-ending battle for performance of all these inspections has begun
    
 1. smart parallelization 
 1. API for discovering PSI elements only once for all inspections/annotators
+
+{% include giscus.html %}
+
