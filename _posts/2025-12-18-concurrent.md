@@ -129,5 +129,6 @@ Mandatory moral corner.
    - After we distributed work to all available CPU cores, and every thread does meaningful work, how to make sure that everything else, especially more important stuff, is not slowed down?
    - After we saturated all CPU resources, how to make it all safely interruptible?
    - What about the remaining 90%?
-     
+2. And only when the performance is critically important, ... Still no.
+
 {% include giscus.html %}
