@@ -17,4 +17,4 @@ I mean, this is a (greatly shortened) list of my failures as a software engineer
 
 - [Hard and Rigid is better than Soft and Limp](/_posts/2025-12-16-hard.md)
 
-  A long and exhausting chase after an annoying bug
+  A failure involving an overly complex datastructure leading to the long and exhausting chase after an annoying bug.
