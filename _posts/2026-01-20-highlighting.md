@@ -114,7 +114,25 @@ And thus, never-ending battle for performance of all these inspections has begun
    Or some other inspection hoped nobody would notice its querying the network in synchronous manner because it was spawned later.
    All these assumptions were broken of course.
    
-1. smart parallelization 
+1. Shuffle computation order to better accomodate many CPU cores
+   It went wrong from the very beginning.
+   An inspection is a tiny piece of code looking for code patterns in code for some issues. There are thousands of them.
+   At the time of writing there were
+   - 4649 local inspections (i.e. inspections that look into the source code of one file at a time),
+   - 600 global inspections (i.e. inspections that work with the global reference graph of the whole project)
+   - 318 annotators (low level analyzers of the partucular language)
+   - 52 HighlightVisitors (even lower level analyzers of syntax structure of the particular language)
+   - plus 2 zillion inspections in various plugins (really, several thousands)
+   All these pieces of code should be scheduled, executed, and aggregated.
+   We do have `stream.parallel().forEach()` for that, right?
+   Not quite. Turned out, there are some irregularities among these inspections, namely
+   - Some inspections are wildly longer than others. It would make sense to start these earlier, to reduse total time.
+   - Some inspections require very expensive services. It would be better to execute them earlier too.
+   - Some inspections require mutually exclusive services. Or single-threaded services. These should not be executed in parallel.
+   - Some inspections have higher perceived priority. Should be executed earlier.
+   Manual moving the execution order was too inconvienient, brittle and not performant.
+   As was annotating some inspections with execution directions.
+
 1. API for discovering PSI elements only once for all inspections/annotators
 
 {% include giscus.html %}
