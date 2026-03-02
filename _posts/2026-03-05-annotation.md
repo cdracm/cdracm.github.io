@@ -6,7 +6,7 @@ comments: true
 ---
 The hardest part in my work is people.
 
-# An Annotation API migration
+### An Annotation API migration story
 
 A long time ago, I refactored the annotation subsystem to be more responsive. 
 (Annotators are these little code nuggets that support various language features and highlight some problems).
@@ -47,7 +47,8 @@ is deprecated and will be removed soon. Please use `newAnnotation(...).create()`
 	at com.jetbrains.cidr.lang.daemon.OCAnnotator.addErrorAnnotation(OCAnnotator.java:136)
 ```
 
-# The Right to be Forgotten. Article 17. 
+### The Right to be Forgotten. Article 17. 
+
 Speaking of deprecation. 
 The eldest and wisest deprecation notice I could find in our codebase - which still lives happily today - was made twenty-something years ago with this awesome commit:
-![deprecated](/assets/people/deprecated.png)
+![deprecated](/assets/annotation/deprecated.png)
