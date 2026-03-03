@@ -131,4 +131,3 @@ Mandatory moral corner.
    - What about the remaining 90%?
 2. And only when the performance is critically important, ... Still no.
 
-{% include giscus.html %}
