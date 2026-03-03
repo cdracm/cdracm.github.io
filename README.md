@@ -17,4 +17,8 @@ I mean, this is a (greatly shortened) list of my failures as a software engineer
 
 - [Hard and Rigid is better than Soft and Limp](/_posts/2025-12-16-hard.md)
 
-  A failure involving an overly complex datastructure leading to the long and exhausting chase after an annoying bug.
+  A failure involving chain of references so long it took me months to follow to the source of the bug.
+
+- [Two Concurrent Life Sentences for Parallel Code](/_posts/2025-12-18-concurrent.md)
+
+  A failure of trying to go out of my head with so many cores.
