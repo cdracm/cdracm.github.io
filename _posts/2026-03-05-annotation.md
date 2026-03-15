@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "The Continuation of Extension of Annotation Migration"
+hidden: true
 comments: true
 ---
 The hardest part in my work is people.
