@@ -54,10 +54,18 @@ and asked the authors of the remaining annotators to port their code when they h
 
 ### The Right to be Forgotten. Article 17. 
 {% raw %}
+
+Speaking of deprecation. 
+The eldest and wisest deprecation notice I could find in our codebase - which still lives happily today - was made exactly 
+
+<p id="my22diff">~20 years</p>
+
+ago with this awesome commit:
+
 <script>
 const start = new Date(2005, 8, 21, 15, 54, 0);
 
-function update() {
+function my22update() {
   const now = new Date();
 
   let y = now.getFullYear() - start.getFullYear();
@@ -79,20 +87,13 @@ function update() {
 
   if (m < 0) { m += 12; y--; }
 
-  document.getElementById("diff").textContent =
+  document.getElementById("my22diff").textContent =
     `${y} years ${m} months ${d} days ${h} hours ${min} minutes ${s} seconds`;
 }
 
-update();
-setInterval(update, 1000);
+my22update();
+setInterval(my22update, 1000);
 </script>
-
-Speaking of deprecation. 
-The eldest and wisest deprecation notice I could find in our codebase - which still lives happily today - was made exactly 
-
-<p id="diff"></p>
-
-ago with this awesome commit:
 
 {% endraw %}
 ![deprecated](/assets/annotation/deprecated.png)
