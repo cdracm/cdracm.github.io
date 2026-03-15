@@ -68,7 +68,9 @@ const start = new Date(2005, 8, 21, 15, 54, 0);
 function my22update() {
   const now = new Date();
 
-  let y = now.getFullYear() - start.getFullYear();
+  let dy = now.getFullYear() - start.getFullYear();
+  let c = Math.floor(dy / 100);
+  let y = dy % 100;
   let m = now.getMonth() - start.getMonth();
   let d = now.getDate() - start.getDate();
   let h = now.getHours() - start.getHours();
@@ -88,7 +90,7 @@ function my22update() {
   if (m < 0) { m += 12; y--; }
 
   document.getElementById("my22diff").textContent =
-    `${y} years ${m} months ${d} days ${h} hours ${min} minutes ${s} seconds`;
+    `${c} centuries ${y} years ${m} months ${d} days ${h} hours ${min} minutes ${s} seconds`;
 }
 
 my22update();
