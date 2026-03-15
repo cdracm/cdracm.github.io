@@ -88,6 +88,11 @@ setInterval(update, 1000);
 </script>
 
 Speaking of deprecation. 
-The eldest and wisest deprecation notice I could find in our codebase - which still lives happily today - was made exactly <p id="diff"></p> ago with this awesome commit:
+The eldest and wisest deprecation notice I could find in our codebase - which still lives happily today - was made exactly 
+
+<p id="diff"></p>
+
+ago with this awesome commit:
+
 {% endraw %}
 ![deprecated](/assets/annotation/deprecated.png)
