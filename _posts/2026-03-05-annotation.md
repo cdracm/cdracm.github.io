@@ -55,6 +55,39 @@ and asked the authors of the remaining annotators to port their code when they h
 
 ### The Right to be Forgotten. Article 17. 
 
+<script>
+const start = new Date(2005, 8, 21, 15, 54, 0);
+
+function update() {
+  const now = new Date();
+
+  let y = now.getFullYear() - start.getFullYear();
+  let m = now.getMonth() - start.getMonth();
+  let d = now.getDate() - start.getDate();
+  let h = now.getHours() - start.getHours();
+  let min = now.getMinutes() - start.getMinutes();
+  let s = now.getSeconds() - start.getSeconds();
+
+  if (s < 0) { s += 60; min--; }
+  if (min < 0) { min += 60; h--; }
+  if (h < 0) { h += 24; d--; }
+
+  if (d < 0) {
+    const prevMonthDays = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+    d += prevMonthDays;
+    m--;
+  }
+
+  if (m < 0) { m += 12; y--; }
+
+  document.getElementById("diff").textContent =
+    `${y} years ${m} months ${d} days ${h} hours ${min} minutes ${s} seconds`;
+}
+
+update();
+setInterval(update, 1000);
+</script>
+
 Speaking of deprecation. 
-The eldest and wisest deprecation notice I could find in our codebase - which still lives happily today - was made twenty-something years ago with this awesome commit:
+The eldest and wisest deprecation notice I could find in our codebase - which still lives happily today - was made exactly <p id="diff"></p> ago with this awesome commit:
 ![deprecated](/assets/annotation/deprecated.png)
