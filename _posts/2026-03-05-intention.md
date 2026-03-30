@@ -2,6 +2,7 @@
 layout: post
 title: "Intention to Lorem-Ipsum, Sir!"
 hidden: true
+published: false
 comments: true
 ---
 The hardest part in my work is people.
